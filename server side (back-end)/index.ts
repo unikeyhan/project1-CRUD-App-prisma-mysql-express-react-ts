@@ -1,16 +1,19 @@
 import 'dotenv/config';
-import express, { Express, Request, Response } from 'express';
+import express, { Express } from 'express';
+import router from './src/routes/index';
+import bodyParser from 'body-parser';
 
 const app: Express = express();
 
-app.get('/', (req: Request, res: Response) => {
-    res.send('hello from express and ts simple project');
-});
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded());
 
-app.get('/hi', (req: Request, res: Response) => {
-    res.send('hiiiiiiii');
-});
+// parse application/json
+app.use(bodyParser.json());
+
+// routes
+app.use('/api', router);
 
 app.listen(process.env.PORT, () => {
-    console.log(`it is done and it is listen now to ${process.env.PORT} prot`);
+  console.log(`Listening on port ${process.env.PORT}`);
 });
