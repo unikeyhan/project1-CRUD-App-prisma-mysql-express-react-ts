@@ -12,6 +12,12 @@ const app = (0, express_1.default)();
 app.use(body_parser_1.default.urlencoded());
 // parse application/json
 app.use(body_parser_1.default.json());
+// Add headers before the routes are defined
+app.use(function (req, res, next) {
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3002');
+    next();
+});
 // routes
 app.use('/api', index_1.default);
 app.listen(process.env.PORT, () => {
